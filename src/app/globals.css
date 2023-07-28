@@ -35,13 +35,25 @@ body {
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: monospace;
+  background-image: linear-gradient(
+    to right top,
+    #280de1,
+    #0057f5,
+    #0077ec,
+    #008fd4,
+    #00a1bc,
+    #00a4b0,
+    #00a5a0,
+    #01a68c,
+    #019c82,
+    #019279,
+    #01886f,
+    #007e66
+  );
 }
 
 a {
