@@ -1,0 +1,21 @@
+.Tilt-inner {
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(
+    to left bottom,
+    #280de1,
+    #0057f5,
+    #0077ec,
+    #008fd4,
+    #00a1bc,
+    #00a4b0,
+    #00a5a0,
+    #01a68c,
+    #019c82,
+    #019279,
+    #01886f,
+    #007e66
+  );
+}
