@@ -1,20 +1,22 @@
 "use client";
-//Components
-import ImageLinkForm from "@/components/ImageLinkForm/ImageLinkForm";
-import Logo from "@/components/logo/logo";
-import Rank from "@/components/Rank/Rank";
-import Navigation from "@/components/navigation/navigation";
+//React
+import { useCallback, useState } from "react";
+
 //Libraries
 import "tachyons";
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 import { particleOptions } from "@/utils/particlesConfig";
+import AppContainer from "@/components/AppContainer/AppContainer";
 
 export default function Home() {
   const options = particleOptions;
-  const particlesInit = async (main) => {
+
+  //Particles library configuration
+  const particlesInit = useCallback(async (main) => {
     await loadFull(main);
-  };
+  });
+
   return (
     <main>
       <Particles
@@ -24,10 +26,7 @@ export default function Home() {
         width="100vw"
         init={particlesInit}
       />
-      <Navigation />
-      <Logo />
-      <Rank />
-      <ImageLinkForm />
+      <AppContainer />
     </main>
   );
 }
