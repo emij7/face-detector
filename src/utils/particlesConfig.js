@@ -19,7 +19,7 @@ export const particleOptions = {
         size: 40,
       },
       push: {
-        quantity: 4,
+        quantity: 3,
       },
       repulse: {
         distance: 200,
@@ -46,7 +46,7 @@ export const particleOptions = {
       enable: true,
       outMode: "bounce",
       random: false,
-      speed: 3,
+      speed: 2,
       straight: false,
     },
     number: {
