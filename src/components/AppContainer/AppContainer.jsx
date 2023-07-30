@@ -91,6 +91,11 @@ const AppContainer = () => {
       <ImageLinkForm onInputChange={onInputChange} onSubmit={onSubmit} />
       {imgUrl.length > 0 && !loading && !error && (
         <div className="w-70 center ma2 relative">
+          {recongnizedFaces.length === 0 && (
+            <div className="center tc ma3 bg-light-green">
+              <p className="green b f3 ">NO FACES DETECTED</p>
+            </div>
+          )}
           {recongnizedFaces?.map((face, index) => {
             return (
               <FaceSquare
