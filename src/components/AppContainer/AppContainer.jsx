@@ -7,13 +7,19 @@ import Rank from "../Rank/Rank";
 import ImageLinkForm from "../ImageLinkForm/ImageLinkForm";
 import { CLARIFAI_CONFIG_OBJECT } from "@/utils/clarifaiConfig";
 import FaceSquare from "../FaceSquare/FaceSquare";
+import { Spinner } from "../spinner/spinner.component";
 
 const AppContainer = () => {
   const [input, setInput] = useState("");
   const [imgUrl, setImgUrl] = useState("");
   const [recongnizedFaces, setRecongnizedFaces] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const onInputChange = (event) => {
+    if (error) {
+      setError(false);
+    }
     setInput(event.target.value);
   };
   const onSubmit = () => {
@@ -46,6 +52,7 @@ const AppContainer = () => {
   };
 
   const fetchApi = async () => {
+    setLoading(true);
     try {
       await fetch(
         "https://api.clarifai.com/v2/models/" +
@@ -58,14 +65,21 @@ const AppContainer = () => {
         .then(setImgUrl(input))
         .then((response) => response.json())
         .then((result) => {
-          setRecongnizedFaces(result.outputs?.[0]?.data.regions);
+          setRecongnizedFaces(result.outputs?.[0]?.data.regions ?? []);
+          if (result.status.description === "Failure") {
+            setError(true);
+            setImgUrl("");
+          }
           console.log(result);
         })
         // .then((result) => setImgUrl(result))
         .catch((error) => console.log("error", error));
     } catch (error) {
       setImgUrl("");
+      setError(true);
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -75,9 +89,9 @@ const AppContainer = () => {
       <Logo />
       <Rank />
       <ImageLinkForm onInputChange={onInputChange} onSubmit={onSubmit} />
-      {imgUrl.length > 0 && (
-        <div className="w-50 center ma2 relative">
-          {recongnizedFaces.map((face, index) => {
+      {imgUrl.length > 0 && !loading && !error && (
+        <div className="w-70 center ma2 relative">
+          {recongnizedFaces?.map((face, index) => {
             return (
               <FaceSquare
                 key={index}
@@ -90,6 +104,18 @@ const AppContainer = () => {
             );
           })}
           <img className="w-100" src={imgUrl} alt="Image with face detection" />
+        </div>
+      )}
+      {error && (
+        <div className="center tc ma3 bg-light-green">
+          <p className="red b f3 ">
+            ERROR - PLEASE PROVIDE A VALID IMAGE OR TRY LATER
+          </p>
+        </div>
+      )}
+      {loading && (
+        <div className="center ">
+          <Spinner />
         </div>
       )}
     </>
