@@ -3,7 +3,7 @@ import React from "react";
 const ImageLinkForm = ({ onInputChange, onSubmit }) => {
   return (
     <div className="flex flex-column">
-      <p className="f3 center pa2 tc">{`This will detect faces in pictures. ¡Give it a try!`}</p>
+      <p className="f3 center pa2 tc b">{`This will detect faces in pictures. ¡Give it a try!`}</p>
       <div className="flex flex-column ">
         <input
           type="text"

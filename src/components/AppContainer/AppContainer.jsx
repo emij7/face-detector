@@ -8,6 +8,7 @@ import ImageLinkForm from "../ImageLinkForm/ImageLinkForm";
 import { CLARIFAI_CONFIG_OBJECT } from "@/utils/clarifaiConfig";
 import FaceSquare from "../FaceSquare/FaceSquare";
 import { Spinner } from "../spinner/spinner.component";
+import SignIn from "../Signin/SignIn";
 
 const AppContainer = () => {
   const [input, setInput] = useState("");
@@ -86,6 +87,7 @@ const AppContainer = () => {
   return (
     <>
       <Navigation />
+      <SignIn />
       <Logo />
       <Rank />
       <ImageLinkForm onInputChange={onInputChange} onSubmit={onSubmit} />
