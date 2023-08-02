@@ -87,7 +87,7 @@ const AppContainer = () => {
   return (
     <>
       <Navigation />
-      <SignIn />
+      {/* <SignIn /> */}
       <Logo />
       <Rank />
       <ImageLinkForm onInputChange={onInputChange} onSubmit={onSubmit} />

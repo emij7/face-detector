@@ -1,33 +1,28 @@
 "use client";
-//React
-import { useCallback, useState } from "react";
-
-//Libraries
-import "tachyons";
+import { useCallback } from "react";
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 import { particleOptions } from "@/utils/particlesConfig";
-import AppContainer from "@/components/AppContainer/AppContainer";
+import { ThemeProvider } from "next-themes";
 
-export default function Home() {
-  const [route, setRoute] = useState();
+const NextThemeProvider = ({ children }) => {
   const options = particleOptions;
 
   //Particles library configuration
   const particlesInit = useCallback(async (main) => {
     await loadFull(main);
   });
-
   return (
-    <main>
-      {/* <Particles
+    <ThemeProvider>
+      <Particles
         id="tsparticles"
         options={options}
         height="100vh"
         width="100vw"
         init={particlesInit}
-      /> */}
-      <AppContainer />
-    </main>
+      />
+      {children}
+    </ThemeProvider>
   );
-}
+};
+export default NextThemeProvider;

@@ -1,6 +1,12 @@
 import React from "react";
-
-const SignIn = () => {
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+const SignIn = ({ handleSubmit }) => {
+  // const router = useRouter();
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   // router.push("/");
+  // };
   return (
     <article className="br3 bw2 ba dark-gray b--black-10 mv4 w-100 w-50-m w-45-l mw6 center shadow-5 bg-blue">
       <main className="pa4 black-80">
@@ -38,6 +44,7 @@ const SignIn = () => {
               className="b ph3 pv2 input-reset ba b--white bg-transparent grow pointer f6 dib white "
               type="submit"
               value="Sign in"
+              onClick={handleSubmit}
             />
           </div>
           <div className="lh-copy mt3 tc">
