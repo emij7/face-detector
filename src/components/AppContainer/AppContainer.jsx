@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navigation from "../navigation/navigation";
 import Logo from "../logo/logo";
 import Rank from "../Rank/Rank";
@@ -9,13 +9,36 @@ import { CLARIFAI_CONFIG_OBJECT } from "@/utils/clarifaiConfig";
 import FaceSquare from "../FaceSquare/FaceSquare";
 import { Spinner } from "../spinner/spinner.component";
 import SignIn from "../Signin/SignIn";
+import { url } from "@/utils/connection";
 
-const AppContainer = () => {
+const faceDetectUser = JSON.parse(localStorage.getItem("faceDetectUser"));
+const AppContainer = ({ user }) => {
   const [input, setInput] = useState("");
   const [imgUrl, setImgUrl] = useState("");
   const [recongnizedFaces, setRecongnizedFaces] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [userData, setUserData] = useState({});
+
+  const getUserData = async () => {
+    try {
+      await fetch(url + "/profile/" + faceDetectUser.user, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data, "datita");
+          if (data) {
+            setUserData(data);
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const onInputChange = (event) => {
     if (error) {
@@ -26,6 +49,12 @@ const AppContainer = () => {
   const onSubmit = () => {
     fetchApi();
   };
+
+  useEffect(() => {
+    if (faceDetectUser) {
+      getUserData();
+    }
+  }, [faceDetectUser]);
 
   //Clarifai config and fetch
   const raw = JSON.stringify({
@@ -52,6 +81,30 @@ const AppContainer = () => {
     body: raw,
   };
 
+  const updateFaceAmount = async (amount) => {
+    try {
+      await fetch(url + "/addRecognizedFaces", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: userData.id,
+          amount: amount,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          if (data) {
+            setUserData({ ...userData, facesAmount: data.facesAmount });
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const fetchApi = async () => {
     setLoading(true);
     try {
@@ -72,6 +125,9 @@ const AppContainer = () => {
             setImgUrl("");
           }
           console.log(result);
+          if (result.outputs?.[0]?.data.regions?.length > 0) {
+            updateFaceAmount(result.outputs?.[0]?.data.regions?.length);
+          }
         })
         // .then((result) => setImgUrl(result))
         .catch((error) => console.log("error", error));
@@ -89,7 +145,8 @@ const AppContainer = () => {
       <Navigation />
       {/* <SignIn /> */}
       <Logo />
-      <Rank />
+      {userData && <p className="f3 center tc">Welcome {userData?.name}</p>}
+      <Rank totalDetections={userData?.facesAmount} />
       <ImageLinkForm onInputChange={onInputChange} onSubmit={onSubmit} />
       {imgUrl.length > 0 && !loading && !error && (
         <div className="w-70 center ma2 relative">
