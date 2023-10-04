@@ -7,9 +7,13 @@ import { useRouter } from "next/navigation";
 import { url } from "@/utils/connection";
 import { useEffect, useState } from "react";
 
+const user = localStorage.getItem("faceDetectUser");
+
 export default function SignInPage() {
   const [loginMensaje, setLoginMensaje] = useState("");
-  const user = localStorage.getItem("faceDetectUser");
+  const [user, setUser] = useState(
+    typeof window !== "undefined" ? localStorage.getItem("faceDetectUser") : {}
+  );
 
   const router = useRouter();
   const handleSubmit = async (e, user) => {

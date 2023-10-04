@@ -11,7 +11,6 @@ import { Spinner } from "../spinner/spinner.component";
 import SignIn from "../Signin/SignIn";
 import { url } from "@/utils/connection";
 
-const faceDetectUser = JSON.parse(localStorage.getItem("faceDetectUser"));
 const AppContainer = ({ user }) => {
   const [input, setInput] = useState("");
   const [imgUrl, setImgUrl] = useState("");
@@ -19,6 +18,11 @@ const AppContainer = ({ user }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [userData, setUserData] = useState({});
+  const [faceDetectUser, setFaceDetectUser] = useState(
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("faceDetectUser"))
+      : {}
+  );
 
   const getUserData = async () => {
     try {
