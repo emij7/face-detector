@@ -16,6 +16,22 @@ export default function Register() {
   const router = useRouter();
   const handleRegister = async (e) => {
     e.preventDefault();
+    if (!newUser.name || !newUser.email || !newUser.password) {
+      setRegisterMensaje("Please fill in all fields");
+      return;
+    }
+    if (newUser.name.length < 2) {
+      setRegisterMensaje("Name must be at least 2 characters long");
+      return;
+    }
+    if (!newUser.email.match(/^\S+@\S+\.\S+$/)) {
+      setRegisterMensaje("Invalid email address");
+      return;
+    }
+    if (newUser.password.length < 6) {
+      setRegisterMensaje("Password must be at least 6 characters long");
+      return;
+    }
     try {
       const response = await fetch(url + "/register", {
         method: "POST",
