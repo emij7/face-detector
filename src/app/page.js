@@ -1,23 +1,11 @@
-"use client";
-
 //Libraries
 import "tachyons";
-import { useRouter } from "next/navigation";
 import AppContainer from "@/components/AppContainer/AppContainer";
-import { useEffect, useState } from "react";
-import { Spinner } from "@/components/spinner/spinner.component";
+import { auth } from "../../auth";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  const [loading, setLoadign] = useState(true);
-  const router = useRouter();
-
-  useEffect(() => {
-    const faceDetectUser = localStorage.getItem("faceDetectUser");
-    if (!faceDetectUser) {
-      router.push("/signin");
-    } else {
-      setLoadign(false);
-    }
-  }, []);
-  return <main>{loading ? <Spinner /> : <AppContainer />}</main>;
+export default async function Home() {
+  // const session = await auth();
+  // if (!session) return redirect("/login");
+  return <main>{<AppContainer />}</main>;
 }

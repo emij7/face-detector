@@ -8,13 +8,13 @@ const Navigation = () => {
   };
   return (
     <nav style={{ display: "flex", justifyContent: "flex-end" }}>
-      <Link
-        href={"/signin"}
+      {/* <Link
+        href={"/login"}
         className="f3 link dim white underline pa3 pointer"
         onClick={handleLogOut}
       >
         Sign Out
-      </Link>
+      </Link> */}
     </nav>
   );
 };

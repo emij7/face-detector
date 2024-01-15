@@ -7,7 +7,7 @@ const ImageLinkForm = ({ onInputChange, onSubmit }) => {
       <div className="flex flex-column ">
         <input
           type="text"
-          placeholder="Provide an url here..."
+          placeholder="Provide a valid image url here..."
           className="f4 pa2 w-70 center "
           onChange={onInputChange}
         />

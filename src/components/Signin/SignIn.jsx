@@ -1,20 +1,14 @@
+"use client";
+
 import Link from "next/link";
 import React, { useState } from "react";
-const SignIn = ({ handleSubmit, loginMensaje, setLoginMensaje }) => {
-  const [userSignIn, setUserSignIn] = useState({
-    email: "",
-    password: "",
-  });
-  const onChangeSignInUser = (e) => {
-    setUserSignIn({ ...userSignIn, [e.target.name]: e.target.value });
-    if (loginMensaje !== "") setLoginMensaje("");
-  };
+const SignIn = ({ errorMessage, dispatch, pending }) => {
   return (
     <article className="br3 bw2 ba dark-gray b--black-10 mv4 w-100 w-50-m w-45-l mw6 center shadow-5 bg-blue">
       <main className="pa4 black-80">
-        <form className="measure center">
+        <form className="measure center" action={dispatch}>
           <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
-            <legend className="f2 fw6 ph0 mh0 white center">Sign In</legend>
+            <legend className="f2 fw6 ph0 mh0 white center">Login</legend>
             <div className="mt3">
               <label className="db fw6 lh-copy f6 white" htmlFor="email">
                 Email
@@ -24,7 +18,8 @@ const SignIn = ({ handleSubmit, loginMensaje, setLoginMensaje }) => {
                 type="email"
                 name="email"
                 id="email"
-                onChange={onChangeSignInUser}
+                placeholder="Enter your email address"
+                required
               />
             </div>
             <div className="mv3">
@@ -36,24 +31,30 @@ const SignIn = ({ handleSubmit, loginMensaje, setLoginMensaje }) => {
                 type="password"
                 name="password"
                 id="password"
-                onChange={onChangeSignInUser}
+                placeholder="Enter password"
+                required
+                minLength={6}
               />
             </div>
+            <div
+              className="flex h-8 items-end space-x-1"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              {errorMessage && (
+                <>
+                  <p className="text-sm text-red-500">{errorMessage}</p>
+                </>
+              )}
+            </div>
           </fieldset>
-          {loginMensaje === "Wrong credentials" && (
-            <p className="black f3 tc b pa1 ">Wrong credentials</p>
-          )}
-          {loginMensaje !== "Wrong credentials" && (
-            <p className="white f3 tc b pa1">{loginMensaje}</p>
-          )}
+
           <div className="tc">
             <input
               className="b ph3 pv2 input-reset ba b--white bg-transparent grow pointer f6 dib white "
               type="submit"
-              value="Sign in"
-              onClick={(e) => {
-                handleSubmit(e, userSignIn);
-              }}
+              value="Login"
+              aria-disabled={pending}
             />
           </div>
           <div className="lh-copy mt3 tc">

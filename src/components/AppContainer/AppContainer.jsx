@@ -150,7 +150,7 @@ const AppContainer = ({ user }) => {
       {/* <SignIn /> */}
       <Logo />
       {userData && <p className="f3 center tc">Welcome {userData?.name}</p>}
-      <Rank totalDetections={userData?.facesAmount} />
+      {/* <Rank totalDetections={userData?.facesAmount} /> */}
       <ImageLinkForm onInputChange={onInputChange} onSubmit={onSubmit} />
       {imgUrl.length > 0 && !loading && !error && (
         <div className="w-70 center ma2 relative">
